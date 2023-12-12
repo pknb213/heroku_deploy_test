@@ -24,6 +24,7 @@ import { AuthModule } from "./auth/auth.module";
             password: process.env.PWD ? process.env.PWD : "",
             database:  process.env.DATABASE ? process.env.DATABASE : "db", //"db.sqlite3",
         }),
+      ssl: true,
       synchronize: true,
       logging: process.env.NODE_ENV !== "test",
       entities: [Podcast, Episode, User, Review]
