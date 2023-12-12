@@ -14,8 +14,14 @@ import { AuthModule } from "./auth/auth.module";
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: "sqlite",
-      database: "db.sqlite3",
+      type: 'postgres', //"sqlite",
+      ...(process.env.DATABASE_URL
+          ? { url: process.env.DATABASE_URL }
+      : {
+
+        }),
+
+      database:  'heroku_test_pg', //"db.sqlite3",
       synchronize: true,
       logging: process.env.NODE_ENV !== "test",
       entities: [Podcast, Episode, User, Review]
