@@ -18,10 +18,12 @@ import { AuthModule } from "./auth/auth.module";
       ...(process.env.DATABASE_URL
           ? { url: process.env.DATABASE_URL }
       : {
-
+            host: process.env.HOST ? process.env.HOST : "host",
+            user: process.env.USER ? process.env.USER : "user",
+            port: process.env.PORT ? +process.env.PORT : 4000,
+            password: process.env.PWD ? process.env.PWD : "",
+            database:  process.env.DATABASE ? process.env.DATABASE : "db", //"db.sqlite3",
         }),
-
-      database:  'heroku_test_pg', //"db.sqlite3",
       synchronize: true,
       logging: process.env.NODE_ENV !== "test",
       entities: [Podcast, Episode, User, Review]
