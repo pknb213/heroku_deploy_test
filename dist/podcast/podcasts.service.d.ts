@@ -1,0 +1,32 @@
+import { CreateEpisodeInput, CreateEpisodeOutput } from "./dtos/create-episode.dto";
+import { CreatePodcastInput, CreatePodcastOutput } from "./dtos/create-podcast.dto";
+import { UpdateEpisodeInput } from "./dtos/update-episode.dto";
+import { UpdatePodcastInput } from "./dtos/update-podcast.dto";
+import { Episode } from "./entities/episode.entity";
+import { Review } from "./entities/review.entity";
+import { Podcast } from "./entities/podcast.entity";
+import { CoreOutput } from "./dtos/output.dto";
+import { PodcastOutput, EpisodesOutput, EpisodesSearchInput, GetAllPodcastsOutput, GetEpisodeOutput } from "./dtos/podcast.dto";
+import { Repository } from "typeorm";
+import { SearchPodcastsInput, SearchPodcastsOutput } from "./dtos/search-podcasts.dto";
+import { CreateReviewInput, CreateReviewOutput } from "./dtos/create-review.dto";
+import { User } from "src/users/entities/user.entity";
+export declare class PodcastsService {
+    private readonly podcastRepository;
+    private readonly episodeRepository;
+    private readonly reviewRepository;
+    constructor(podcastRepository: Repository<Podcast>, episodeRepository: Repository<Episode>, reviewRepository: Repository<Review>);
+    private readonly InternalServerErrorOutput;
+    getAllPodcasts(): Promise<GetAllPodcastsOutput>;
+    createPodcast(creator: User, { title, category }: CreatePodcastInput): Promise<CreatePodcastOutput>;
+    getPodcast(id: number): Promise<PodcastOutput>;
+    deletePodcast(user: User, id: number): Promise<CoreOutput>;
+    updatePodcast(user: User, { id, payload }: UpdatePodcastInput): Promise<CoreOutput>;
+    searchPodcasts({ titleQuery, page }: SearchPodcastsInput): Promise<SearchPodcastsOutput>;
+    getEpisodes(podcastId: number): Promise<EpisodesOutput>;
+    getEpisode({ podcastId, episodeId }: EpisodesSearchInput): Promise<GetEpisodeOutput>;
+    createEpisode(user: User, { podcastId, title, category }: CreateEpisodeInput): Promise<CreateEpisodeOutput>;
+    deleteEpisode(user: User, { podcastId, episodeId }: EpisodesSearchInput): Promise<CoreOutput>;
+    updateEpisode(user: User, { podcastId, episodeId, ...rest }: UpdateEpisodeInput): Promise<CoreOutput>;
+    createReview(creator: User, { title, text, podcastId }: CreateReviewInput): Promise<CreateReviewOutput>;
+}
